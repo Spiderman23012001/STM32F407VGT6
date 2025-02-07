@@ -1707,6 +1707,20 @@ Discarded input sections
  .text          0x00000000        0x0 ./mylib/src/Button.o
  .data          0x00000000        0x0 ./mylib/src/Button.o
  .bss           0x00000000        0x0 ./mylib/src/Button.o
+ .data.btn_current
+                0x00000000        0x1 ./mylib/src/Button.o
+ .data.btn_last
+                0x00000000        0x1 ./mylib/src/Button.o
+ .data.btn_filter
+                0x00000000        0x1 ./mylib/src/Button.o
+ .bss.debouncing
+                0x00000000        0x1 ./mylib/src/Button.o
+ .bss.time_deboune
+                0x00000000        0x4 ./mylib/src/Button.o
+ .bss.time_start_press
+                0x00000000        0x1 ./mylib/src/Button.o
+ .bss.is_press_timeout
+                0x00000000        0x1 ./mylib/src/Button.o
  .debug_macro   0x00000000      0xaa8 ./mylib/src/Button.o
  .debug_macro   0x00000000      0x20f ./mylib/src/Button.o
  .debug_macro   0x00000000       0x2e ./mylib/src/Button.o
@@ -2360,7 +2374,7 @@ LOAD C:/ST/STM32CubeIDE_1.17.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.ext
 LOAD C:/ST/STM32CubeIDE_1.17.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.1.0.202410251130/tools/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libm.a
 LOAD C:/ST/STM32CubeIDE_1.17.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.1.0.202410251130/tools/bin/../lib/gcc/arm-none-eabi/12.3.1/thumb/v7-m/nofp\libgcc.a
 
-.debug_info     0x00000000     0x2aca
+.debug_info     0x00000000     0x2b59
  .debug_info    0x00000000      0x4d2 ./Core/Src/main.o
  .debug_info    0x000004d2      0x1f1 ./Core/Src/stm32f1xx_hal_msp.o
  .debug_info    0x000006c3      0x113 ./Core/Src/stm32f1xx_it.o
@@ -2370,9 +2384,9 @@ LOAD C:/ST/STM32CubeIDE_1.17.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.ext
  .debug_info    0x0000112c      0xa87 ./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.o
  .debug_info    0x00001bb3      0x5ab ./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.o
  .debug_info    0x0000215e      0x7d5 ./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.o
- .debug_info    0x00002933      0x197 ./mylib/src/Button.o
+ .debug_info    0x00002933      0x226 ./mylib/src/Button.o
 
-.debug_abbrev   0x00000000      0xf21
+.debug_abbrev   0x00000000      0xf35
  .debug_abbrev  0x00000000      0x1f4 ./Core/Src/main.o
  .debug_abbrev  0x000001f4       0xdb ./Core/Src/stm32f1xx_hal_msp.o
  .debug_abbrev  0x000002cf       0x73 ./Core/Src/stm32f1xx_it.o
@@ -2382,7 +2396,7 @@ LOAD C:/ST/STM32CubeIDE_1.17.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.ext
  .debug_abbrev  0x000006a6      0x2f8 ./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.o
  .debug_abbrev  0x0000099e      0x1ca ./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.o
  .debug_abbrev  0x00000b68      0x2b3 ./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.o
- .debug_abbrev  0x00000e1b      0x106 ./mylib/src/Button.o
+ .debug_abbrev  0x00000e1b      0x11a ./mylib/src/Button.o
 
 .debug_aranges  0x00000000      0x3f0
  .debug_aranges
@@ -2486,7 +2500,7 @@ LOAD C:/ST/STM32CubeIDE_1.17.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.ext
  .debug_line    0x00003c09      0xd68 ./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.o
  .debug_line    0x00004971      0x6e8 ./mylib/src/Button.o
 
-.debug_str      0x00000000    0x7bc57
+.debug_str      0x00000000    0x7bcb1
  .debug_str     0x00000000    0x7ac5c ./Core/Src/main.o
                               0x7af88 (size before relaxing)
  .debug_str     0x0007ac5c       0x5a ./Core/Src/stm32f1xx_hal_msp.o
@@ -2505,8 +2519,8 @@ LOAD C:/ST/STM32CubeIDE_1.17.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.ext
                               0x7b0fd (size before relaxing)
  .debug_str     0x0007ba0d      0x229 ./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.o
                               0x7b1a6 (size before relaxing)
- .debug_str     0x0007bc36       0x21 ./mylib/src/Button.o
-                              0x7ad56 (size before relaxing)
+ .debug_str     0x0007bc36       0x7b ./mylib/src/Button.o
+                              0x7adc2 (size before relaxing)
 
 .comment        0x00000000       0x43
  .comment       0x00000000       0x43 ./Core/Src/main.o

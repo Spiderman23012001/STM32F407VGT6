@@ -27,25 +27,25 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
  11 .ARM.attributes 00000029  00000000  00000000  0000300c  2**0
                   CONTENTS, READONLY
- 12 .debug_info   00002aca  00000000  00000000  00003035  2**0
+ 12 .debug_info   00002b59  00000000  00000000  00003035  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 13 .debug_abbrev 00000f21  00000000  00000000  00005aff  2**0
+ 13 .debug_abbrev 00000f35  00000000  00000000  00005b8e  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_aranges 000003f0  00000000  00000000  00006a20  2**3
+ 14 .debug_aranges 000003f0  00000000  00000000  00006ac8  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_rnglists 000002cc  00000000  00000000  00006e10  2**0
+ 15 .debug_rnglists 000002cc  00000000  00000000  00006eb8  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_macro  00015acf  00000000  00000000  000070dc  2**0
+ 16 .debug_macro  00015acf  00000000  00000000  00007184  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   00005059  00000000  00000000  0001cbab  2**0
+ 17 .debug_line   00005059  00000000  00000000  0001cc53  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    0007bc57  00000000  00000000  00021c04  2**0
+ 18 .debug_str    0007bcb1  00000000  00000000  00021cac  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000043  00000000  00000000  0009d85b  2**0
+ 19 .comment      00000043  00000000  00000000  0009d95d  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  00000d60  00000000  00000000  0009d8a0  2**2
+ 20 .debug_frame  00000d60  00000000  00000000  0009d9a0  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 21 .debug_line_str 00000055  00000000  00000000  0009e600  2**0
+ 21 .debug_line_str 00000055  00000000  00000000  0009e700  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -3163,10 +3163,10 @@ static void RCC_Delay(uint32_t mdelay)
  800117c:	10624dd3 	.word	0x10624dd3
 
 08001180 <hello_v1>:
+uint32_t time_deboune;
+uint8_t time_start_press;
+uint8_t is_press_timeout;
 
-
-#include "Button.h"
-#include <stdint.h>
 void hello_v1(uint32_t time_delay)
 {
  8001180:	b580      	push	{r7, lr}
