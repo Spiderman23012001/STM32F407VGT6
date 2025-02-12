@@ -1,28 +1,14 @@
-00:10:17 **** Incremental Build of configuration Debug for project stm32f4xx_drivers ****
+15:49:26 **** Incremental Build of configuration Debug for project stm32f4xx_drivers ****
 make -j8 all 
-arm-none-eabi-gcc "../Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F407G_DISC1 -DSTM32F4 -DSTM32F407VGTx -c -I../Inc -I"C:/Users/Rambo/Desktop/stm32/stm32f4xx_drivers/drivers/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/main.o"
-../Src/main.c: In function 'main':
-../Src/main.c:25:24: warning: initialization of 'uint32_t' {aka 'long unsigned int'} from 'volatile uint32_t *' {aka 'volatile long unsigned int *'} makes integer from pointer without a cast [-Wint-conversion]
-   25 |         uint32_t add = &(pGPIOA->OSPEEDR);
-      |                        ^
-../Src/main.c:25:18: warning: unused variable 'add' [-Wunused-variable]
-   25 |         uint32_t add = &(pGPIOA->OSPEEDR);
-      |                  ^~~
-arm-none-eabi-gcc -o "stm32f4xx_drivers.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Rambo\Desktop\stm32\stm32f4xx_drivers\STM32F407VGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="stm32f4xx_drivers.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: stm32f4xx_drivers.elf
- 
 arm-none-eabi-size  stm32f4xx_drivers.elf 
-arm-none-eabi-objdump -h -S stm32f4xx_drivers.elf  > "stm32f4xx_drivers.list"
    text	   data	    bss	    dec	    hex	filename
-   4864	     92	   1900	   6856	   1ac8	stm32f4xx_drivers.elf
+   2636	      0	   1568	   4204	   106c	stm32f4xx_drivers.elf
 Finished building: default.size.stdout
  
-Finished building: stm32f4xx_drivers.list
- 
-00:10:23 **** Incremental Build of configuration Debug for project stm32f4xx_drivers ****
+15:49:31 **** Incremental Build of configuration Debug for project stm32f4xx_drivers ****
 make -j8 all 
 arm-none-eabi-size  stm32f4xx_drivers.elf 
    text	   data	    bss	    dec	    hex	filename
-   4864	     92	   1900	   6856	   1ac8	stm32f4xx_drivers.elf
+   2636	      0	   1568	   4204	   106c	stm32f4xx_drivers.elf
 Finished building: default.size.stdout
  

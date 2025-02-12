@@ -1,0 +1,32 @@
+/*
+ * main.c
+ *
+ *  Created on: Feb 9, 2025
+ *      Author: Rambo
+ */
+
+#include "stm32f4xx.h"
+#include "stm32f407xx_gpio_driver.h"
+
+#define RCC_ADD			0x40023800UL
+#define RCC_AHB1ENR		(RCC_ADD + 0x30UL)
+#define RCC_CFGR		(RCC_ADD + 0x08UL)
+#define __vo			volatile
+
+void delay(void)
+{
+    for(uint32_t i = 0; i < 500000; i++);
+}
+
+int main(void)
+{
+	// enable clock
+	*((volatile uint32_t *)RCC_AHB1ENR) &= ~(1<<0);
+	RCC_AHB1ENR |= (1<<0);
+	//config mode
+	// config speed
+	//config optpye
+	//config pullupdown
+
+    return 0;
+}

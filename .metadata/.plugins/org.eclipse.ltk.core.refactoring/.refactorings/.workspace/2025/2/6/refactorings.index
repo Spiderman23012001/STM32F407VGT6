@@ -1,3 +1,5 @@
 1738550260496	Delete resource 'MCU_CLock_tree'
 1738857959214	Rename resource 'MCU_Interrupt'
 1738857973611	Delete resource 'stm32f4xx_drivers'
+1738997802509	Delete resource 'stm32f4xx_drivers/drivers/Inc/stm32f407xx_gpio.h'
+1738997810634	Delete resource 'stm32f4xx_drivers/drivers/Src/stm32f407xx_gpio.c'

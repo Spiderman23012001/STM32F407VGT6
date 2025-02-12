@@ -9,8 +9,39 @@
 #define INC_STM32F4XX_H_
 
 #include<stdint.h>
+#include <string.h>
 #include <stdio.h>
 #define __vo volatile
+/*
+ * **********************************START: Processor Specific Details***********************************/
+
+/*
+ * ARM-Cortex Mx Processor NVIC ISERx Register Addresses
+ */
+#define NVIC_ISER0			((__vo uint32_t*)0xE000E100 )
+#define NVIC_ISER1			((__vo uint32_t*)0xE000E104 )
+#define NVIC_ISER2			((__vo uint32_t*)0xE000E108 )
+#define NVIC_ISER3			((__vo uint32_t*)0xE000E10c )
+
+/*
+ * ARM-Cortex Mx Processor NVIC ICERx Register Addresses
+ */
+#define NVIC_ICER0			((__vo uint32_t*)0XE000E180 )
+#define NVIC_ICER1			((__vo uint32_t*)0XE000E184 )
+#define NVIC_ICER2			((__vo uint32_t*)0XE000E188 )
+#define NVIC_ICER3			((__vo uint32_t*)0XE000E18c )
+
+/*
+ * ARM Cortex Mx Processor Priority Register Address Calculation
+ */
+#define NVIC_PR_BASE_ADDR   ( (__vo uint32_t*)0XE000E400 )
+
+
+/*
+ * ARM Cortex Mx Processor number of priority bits implemented in Priority Register
+ */
+#define NO_PR_BITS_IMPLEMENTED  4
+
 
 /*
  * base addresses of Flash and SRAM memories
@@ -117,6 +148,9 @@
 #define HASH_BASEADDR                (AHB2PERIPH_BASE + 0x60400)
 #define RNG_BASEADDR                 (AHB2PERIPH_BASE + 0x60800)
 
+/*
+ * Peripheral register definition struct for GPIO
+ */
 
 typedef struct {
     __vo uint32_t MODER;     // Mode register: định nghĩa chế độ hoạt động của từng chân (Input, Output, AF, Analog)
@@ -129,6 +163,11 @@ typedef struct {
     __vo uint32_t LCKR;
     __vo uint32_t AFR[2];    // Alternate function registers: AFR[0] cho chân 0-7, AFR[1] cho chân 8-15
 } GPIO_RegDef_t;
+
+
+/*
+ * Peripheral register definition struct for RCC
+ */
 
 typedef struct {
 	__vo uint32_t   CR;
@@ -164,6 +203,155 @@ typedef struct {
 
 }RCC_RegDef_t;
 
+/*
+ * Peripheral register definition struct for EXTI
+ */
+typedef struct
+{
+	__vo uint32_t IMR;
+	__vo uint32_t EMR;
+	__vo uint32_t RTSR;
+	__vo uint32_t FTSR;
+	__vo uint32_t SWIER;
+	__vo uint32_t PR;
+
+}EXTI_RegDef_t;
+
+/*
+ * Peripheral register definition struct for SYSCFG
+ */
+typedef struct
+{
+	__vo uint32_t MEMRMP;
+	__vo uint32_t PMC;
+	__vo uint32_t EXTICR[4];
+	uint32_t REVERSED[3];
+	__vo uint32_t CMPCR;
+
+}SYSCFG_RegDef_t;
+
+#define GPIO_BASEADDR_TO_CODE(x)		(	(x == GPIOA)?0:\
+											(x == GPIOB)?1:\
+											(x == GPIOC)?2:\
+											(x == GPIOD)?3:\
+											(x == GPIOE)?4:\
+											(x == GPIOF)?5:\
+											(x == GPIOG)?6:\
+											(x == GPIOH)?7:0 )
+
+/*
+ * IRQ(Interrupt Request) Numbers of STM32F407x MCU
+ * NOTE: Update these macros with valid values according to your MCU
+ */
+#define IRQ_NO_WWDG                 0   /* Window Watchdog interrupt                                            */
+#define IRQ_NO_PVD                  1   /* PVD through EXTI line detection interrupt                            */
+#define IRQ_NO_TAMP_STAMP           2   /* Tamper and Time stamp interrupts through EXTI line                   */
+#define IRQ_NO_RTC_WKUP             3   /* RTC Wakeup interrupt through EXTI line                               */
+#define IRQ_NO_FLASH                4   /* Flash global interrupt                                               */
+#define IRQ_NO_RCC                  5   /* RCC global interrupt                                                 */
+#define IRQ_NO_EXTI0                6   /* EXTI Line0 interrupt                                                 */
+#define IRQ_NO_EXTI1                7   /* EXTI Line1 interrupt                                                 */
+#define IRQ_NO_EXTI2                8   /* EXTI Line2 interrupt                                                 */
+#define IRQ_NO_EXTI3                9   /* EXTI Line3 interrupt                                                 */
+#define IRQ_NO_EXTI4                10  /* EXTI Line4 interrupt                                                 */
+#define IRQ_NO_DMA1_STREAM0         11  /* DMA1 Stream0 interrupt                                               */
+#define IRQ_NO_DMA1_STREAM1         12  /* DMA1 Stream1 interrupt                                               */
+#define IRQ_NO_DMA1_STREAM2         13  /* DMA1 Stream2 interrupt                                               */
+#define IRQ_NO_DMA1_STREAM3         14  /* DMA1 Stream3 interrupt                                               */
+#define IRQ_NO_DMA1_STREAM4         15  /* DMA1 Stream4 interrupt                                               */
+#define IRQ_NO_DMA1_STREAM5         16  /* DMA1 Stream5 interrupt                                               */
+#define IRQ_NO_DMA1_STREAM6         17  /* DMA1 Stream6 interrupt                                               */
+#define IRQ_NO_ADC                  18  /* ADC1, ADC2 and ADC3 global interrupts                                */
+#define IRQ_NO_CAN1_TX              19  /* CAN1 TX interrupts                                                   */
+#define IRQ_NO_CAN1_RX0             20  /* CAN1 RX0 interrupts                                                  */
+#define IRQ_NO_CAN1_RX1             21  /* CAN1 RX1 interrupts                                                  */
+#define IRQ_NO_CAN1_SCE             22  /* CAN1 SCE interrupts                                                  */
+#define IRQ_NO_EXTI9_5              23  /* EXTI Line[9:5] interrupts                                            */
+#define	IRQ_NO_TIM1_BRK_TIM9        24  /* TIM1 Break interrupt and TIM9 global interrupt                       */
+#define	IRQ_NO_TIM1_UP_TIM10        25  /* TIM1 Update interrupt and TIM10 global interrupt                     */
+#define IRQ_NO_TIM1_TRG_COM_TIM11   26  /* TIM1 Trigger and Commutation interrupts and TIM11 global interrupt   */
+#define IRQ_NO_TIM1_CC              27  /* TIM1 Capture Compare interrupt                                       */
+#define IRQ_NO_TIM2                 28  /* TIM2 global interrupt                                                */
+#define IRQ_NO_TIM3                 29  /* TIM3 global interrupt                                                */
+#define IRQ_NO_TIM4                 30  /* TIM4 global interrupt                                                */
+#define IRQ_NO_I2C1_EV              31  /* I2C1 event interrupt                                                 */
+#define IRQ_NO_I2C1_ER              32  /* I2C1 error interrupt                                                 */
+#define IRQ_NO_I2C2_EV              33  /* I2C2 event interrupt                                                 */
+#define IRQ_NO_I2C2_ER              34  /* I2C2 error interrupt                                                 */
+#define IRQ_NO_SPI1                 35  /* SPI1 global interrupt                                                */
+#define IRQ_NO_SPI2                 36  /* SPI2 global interrupt                                                */
+#define IRQ_NO_USART1               37  /* USART1 global interrupt                                              */
+#define IRQ_NO_USART2               38  /* USART2 global interrupt                                              */
+#define IRQ_NO_USART3               39  /* USART3 global interrupt                                              */
+#define IRQ_NO_EXTI15_10            40  /* EXTI Line[15:10] interrupts                                          */
+#define IRQ_NO_RTC_ALARM            41  /* RTC Alarms (A and B) through EXTI line interrupts                    */
+#define IRQ_NO_OTG_FS_WKUP          42  /* USB On-The-Go FS Wakeup through EXTI line interrupt                  */
+#define IRQ_NO_TIM8_BRK_TIM12       43  /* TIM8 Break interrupt and TIM12 global interrupt                      */
+#define IRQ_NO_TIM8_UP_TIM13        44  /* TIM8 Update and TIM13 global interrupt                               */
+#define IRQ_NO_TIM8_TRG_COM_TIM14   45  /* TIM8 Trigger and Commutation interrupts and TIM14 global interrupt   */
+#define IRQ_NO_TIM8_CC              46  /* TIM8 Capture Compare interrupt                                       */
+#define IRQ_NO_DMA1_STREAM7         47  /* DMA1 Stream7 global interrupt                                        */
+#define IRQ_NO_FMC                  48  /* FMC global interrupt                                                 */
+#define IRQ_NO_SDIO                 49  /* SDIO global interrupt                                                */
+#define IRQ_NO_TIM5                 50  /* TIM5 global interrupt                                                */
+#define IRQ_NO_SPI3                 51  /* SPI3 global interrupt                                                */
+#define IRQ_NO_UART4                52  /* UART4 global interrupt                                               */
+#define IRQ_NO_UART5                53  /* UART5 global interrupt                                               */
+#define IRQ_NO_TIM6_DAC             54  /* TIM6 global interrupt, DAC1 and DAC2 underrun error interrupts       */
+#define IRQ_NO_TIM7                 55  /* TIM7 global interrupt                                                */
+#define IRQ_NO_DMA2_STREAM0         56  /* DMA2 Stream0 global interrupt                                        */
+#define IRQ_NO_DMA2_STREAM1         57  /* DMA2 Stream1 global interrupt                                        */
+#define IRQ_NO_DMA2_STREAM2         58  /* DMA2 Stream2 global interrupt                                        */
+#define IRQ_NO_DMA2_STREAM3         59  /* DMA2 Stream3 global interrupt                                        */
+#define IRQ_NO_DMA2_STREAM4         60  /* DMA2 Stream4 global interrupt                                        */
+#define IRQ_NO_CAN2_TX              63  /* CAN2 TX interrupts                                                   */
+#define IRQ_NO_CAN2_RX0             64  /* CAN2 RX0 interrupts                                                  */
+#define IRQ_NO_CAN2_RX1             65  /* CAN2 RX1 interrupts                                                  */
+#define IRQ_NO_CAN2_SCE             66  /* CAN2 SCE interrupts                                                  */
+#define IRQ_NO_CAN2_OTG             67  /* USB On The Go FS global interrupt                                    */
+#define IRQ_NO_DMA2_STREAM5         68  /* DMA2 Stream5 global interrupt                                        */
+#define IRQ_NO_DMA2_STREAM6         69  /* DMA2 Stream6 global interrupt                                        */
+#define IRQ_NO_DMA2_STREAM7         70  /* DMA2 Stream7 global interrupt                                        */
+#define IRQ_NO_USART6               71  /* USART6 global interrupt                                              */
+#define IRQ_NO_I2C3_EV              72  /* I2C3 event interrupt                                                 */
+#define IRQ_NO_I2C3_ER              73  /* I2C3 error interrupt                                                 */
+#define IRQ_NO_OTG_HS_EP1_OUT       74  /* USB On The Go HS End Point 1 Out global interrupt                    */
+#define IRQ_NO_OTG_HS_EP1_IN        75  /* USB On The Go HS End Point 1 In global interrupt                     */
+#define IRQ_NO_OTG_HS_WKUP          76  /* USB On The Go HS Wakeup through EXTI interrupt                       */
+#define IRQ_NO_OTG_HS               77  /* USB On The Go HS global interrupt                                    */
+#define IRQ_NO_DCMI                 78  /* DCMI global interrupt                                                */
+#define IRQ_NO_FPU                  81  /* FPU global interrupt                                                 */
+#define IRQ_NO_SPI4                 84  /* SPI4 global interrupt                                                */
+#define IRQ_NO_SAI1                 87  /* SAI1 global interrupt                                                */
+#define IRQ_NO_SAI2                 91  /* SAI2 global interrupt                                                */
+#define IRQ_NO_QUADSPI              92  /* QuadSPI global interrupt                                             */
+#define IRQ_NO_HDMI_CEC             93  /* HDMI-CEC global interrupt                                            */
+#define IRQ_NO_SPDIF_RX             94  /* SPDIF-Rx global interrupt                                            */
+#define IRQ_NO_FMPI2C1_EV           95  /* FMPI2C1 event interrupt                                              */
+#define IRQ_NO_FMPI2C1_ER           96  /* FMPI2C1 error interrupt                                              */
+
+/*
+ * Macros for all possible priority levels
+ */
+#define NVIC_IRQ_PRI0       0
+#define NVIC_IRQ_PRI1       1
+#define NVIC_IRQ_PRI2       2
+#define NVIC_IRQ_PRI3       3
+#define NVIC_IRQ_PRI4       4
+#define NVIC_IRQ_PRI5       5
+#define NVIC_IRQ_PRI6       6
+#define NVIC_IRQ_PRI7       7
+#define NVIC_IRQ_PRI8       8
+#define NVIC_IRQ_PRI9       9
+#define NVIC_IRQ_PRI10      10
+#define NVIC_IRQ_PRI11      11
+#define NVIC_IRQ_PRI12      12
+#define NVIC_IRQ_PRI13      13
+#define NVIC_IRQ_PRI14      14
+#define NVIC_IRQ_PRI15      15
+
+
+
 #define GPIOA           ((GPIO_RegDef_t*)GPIOA_BASEADDR)
 #define GPIOB           ((GPIO_RegDef_t*)GPIOB_BASEADDR)
 #define GPIOC           ((GPIO_RegDef_t*)GPIOC_BASEADDR)
@@ -177,7 +365,8 @@ typedef struct {
 #define GPIOK           ((GPIO_RegDef_t*)GPIOK_BASEADDR)
 
 #define RCC             ((RCC_RegDef_t*)RCC_BASEADDR)
-
+#define EXTI            ((EXTI_RegDef_t*)EXTI_BASEADDR)
+#define SYSCFG            ((SYSCFG_RegDef_t*)SYSCFG_BASEADDR)
 /*
  * Clock enable macros for GPIOx peripherals
  */
