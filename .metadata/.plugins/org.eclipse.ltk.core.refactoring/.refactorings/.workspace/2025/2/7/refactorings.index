@@ -1,2 +1,7 @@
 1739071870667	Delete resource 'stm32f4xx_drivers/Src/main.c'
 1739072952539	Delete resource 'stm32f4xx_drivers/Src/001led_toggle.c'
+1739358979044	Delete resource 'stm32f407_driver'
+1739359210936	Delete resource 'SPI_driver/driver'
+1739359565117	Delete resource 'SPI_driver/Drivers/Inc/stm32f407xx_gpio.h'
+1739359584177	Delete resource 'SPI_driver/Drivers/Src/stm32f407xx_gpio.c'
+1739359694348	Delete resource 'SPI_driver/Drivers/Inc/stm32f407xx.h'

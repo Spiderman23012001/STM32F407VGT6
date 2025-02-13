@@ -1,0 +1,176 @@
+/*
+ * stm32f407xx.h
+ *
+ *  Created on: Feb 12, 2025
+ *      Author: Rambo
+ */
+
+#ifndef INC_STM32F407XX_H_
+#define INC_STM32F407XX_H_
+
+/*
+ *  Include standard lib
+ */
+
+#include<stdint.h>
+#include <string.h>
+#include <stdio.h>
+#define __vo volatile
+
+/*
+ *  Base address memories
+ */
+
+#define FLASH_BASEADDR			0x08000000U
+#define SRAM1_BASEADDR			0x20000000U
+#define SRAM2_BASEADDR			0x2001C000U
+#define ROM_BASEADDR			0x1FFF0000U
+#define SRAM_BASEADDR           SRAM1_BASEADDR
+
+
+/*
+ * **************************----Peripheral----*************************
+ */
+
+/*
+ *  base peripheral register: AHBx, APBx
+ */
+#define PERIPH_BASE				0x40000000U
+#define APB1_BASEADDR			0x40000000U
+#define APB2_BADEADDR			0x40010000U
+#define AHB1_BASEADDR			0x40020000U
+#define AHB2_BASEADDR			0x50000000U
+
+/*
+ * Base address of peripherals which are hanging on APB1 bus
+ */
+#define TIM2_BASEADDR           APB1_BASEADDR
+#define TIM3_BASEADDR           (APB1_BASEADDR + 0x0400U)
+#define TIM4_BASEADDR           (APB1_BASEADDR + 0x0800U)
+#define TIM5_BASEADDR           (APB1_BASEADDR + 0x0C00U)
+#define TIM6_BASEADDR           (APB1_BASEADDR + 0x1000U)
+#define TIM7_BASEADDR           (APB1_BASEADDR + 0x1400U)
+#define TIM12_BASEADDR           (APB1_BASEADDR + 0x1800U)
+#define TIM13_BASEADDR           (APB1_BASEADDR + 0x1C00U)
+#define TIM14_BASEADDR           (APB1_BASEADDR + 0x2000U)
+#define RTC_BKP_BASEADDR           (APB1_BASEADDR + 0x2800U)
+#define WWDG_BASEADDR               (APB1_BASEADDR + 0x2C00U)
+#define IWDG_BASEADDR               (APB1_BASEADDR + 0x3000U)
+#define I2S2ext_BASEADDR               (APB1_BASEADDR + 0x3400U)
+#define SPI2_I2S2_BASEADDR               (APB1_BASEADDR + 0x3800U)
+#define SPI2_I2S2_BASEADDR               (APB1_BASEADDR + 0x3C00U)
+#define I2S3ext_BASEADDR               (APB1_BASEADDR + 0x4000U)
+#define USART2_BASEADDR               (APB1_BASEADDR + 0x4400U)
+#define USART3_BASEADDR               (APB1_BASEADDR + 0x4800U)
+#define UART4_BASEADDR               (APB1_BASEADDR + 0x4C00U)
+#define UART5_BASEADDR               (APB1_BASEADDR + 0x5000U)
+#define I2C1_BASEADDR               (APB1_BASEADDR + 0x5400U)
+#define I2C2_BASEADDR               (APB1_BASEADDR + 0x5800U)
+#define I2C3_BASEADDR               (APB1_BASEADDR + 0x5C00U)
+#define CAN1_BASEADDR               (APB1_BASEADDR + 0x6400U)
+#define CAN2_BASEADDR               (APB1_BASEADDR + 0x6800U)
+#define PWR_BASEADDR               (APB1_BASEADDR + 0x7000U)
+#define DAC_BASEADDR               (APB1_BASEADDR + 0x7400U)
+#define UART7_BASEADDR               (APB1_BASEADDR + 0x7800U)
+#define UART8_BASEADDR               (APB1_BASEADDR + 0x7C00U)
+
+
+/*
+ * Base address of peripherals which are hanging on APB2 bus
+ */
+#define TIM1_BASEADDR               (APB2_BASEADDR + 0x0000U)
+#define TIM8_BASEADDR               (APB2_BASEADDR + 0x0400U)
+#define USART1_BASEADDR               (APB2_BASEADDR + 0x1000U)
+#define USART6_BASEADDR               (APB2_BASEADDR + 0x1400U)
+#define ADC1_ADC2_ADC3_BASEADDR               (APB2_BASEADDR + 0x2000U)
+#define SDIO_BASEADDR               (APB2_BASEADDR + 0x2C00U)
+#define SPI1_BASEADDR               (APB2_BASEADDR + 0x3000U)
+#define SPI4_BASEADDR               (APB2_BASEADDR + 0x3400U)
+#define SYSCFG_BASEADDR               (APB2_BASEADDR + 0x3800U)
+#define EXTI_BASEADDR               (APB2_BASEADDR + 0x3C00U)
+#define TIM9_BASEADDR               (APB2_BASEADDR + 0x4000U)
+#define TIM10_BASEADDR               (APB2_BASEADDR + 0x4400U)
+#define TIM11_BASEADDR               (APB2_BASEADDR + 0x4800U)
+#define SPI5_BASEADDR               (APB2_BASEADDR + 0x5000U)
+#define SPI6_BASEADDR               (APB2_BASEADDR + 0x5400U)
+#define SAI1_BASEADDR               (APB2_BASEADDR + 0x5800U)
+#define LCD_TFT_BASEADDR               (APB2_BASEADDR + 0x6800U)
+
+/*
+ * Base address of peripherals which are hanging on AHB1 bus
+ */
+#define GPIOA_BASEADDR               (AHB1_BASEADDR + 0x0000U)
+#define GPIOB_BASEADDR               (AHB1_BASEADDR + 0x0400U)
+#define GPIOC_BASEADDR               (AHB1_BASEADDR + 0x0800U)
+#define GPIOD_BASEADDR               (AHB1_BASEADDR + 0x0C00U)
+#define GPIOE_BASEADDR               (AHB1_BASEADDR + 0x1000U)
+#define GPIOF_BASEADDR               (AHB1_BASEADDR + 0x1400U)
+#define GPIOG_BASEADDR               (AHB1_BASEADDR + 0x1800U)
+#define GPIOH_BASEADDR               (AHB1_BASEADDR + 0x1C00U)
+#define GPIOI_BASEADDR               (AHB1_BASEADDR + 0x2000U)
+#define GPIOJ_BASEADDR               (AHB1_BASEADDR + 0x2400U)
+#define GPIOk_BASEADDR               (AHB1_BASEADDR + 0x2800U)
+#define CRC_BASEADDR               (AHB1_BASEADDR + 0x3000U)
+#define RCC_BASEADDR               (AHB1_BASEADDR + 0x3800U)
+#define FL_BASEADDR               (AHB1_BASEADDR + 0x3C00U)
+#define BKPSRAM_BASEADDR               (AHB1_BASEADDR + 0x4000U)
+#define DMA1_BASEADDR               (AHB1_BASEADDR + 0x6000U)
+#define DMA2_BASEADDR               (AHB1_BASEADDR + 0x6400U)
+#define ETHERNET_BASEADDR               (AHB1_BASEADDR + 0x8000U)
+#define DMA2D_BASEADDR               (AHB1_BASEADDR + 0xB000U)
+#define USB_OTG_HS1_BASEADDR               0x40040000U
+
+/*
+ * Base address of peripherals which are hanging on AHB2 bus
+ */
+#define USB_OTG_HS2_BASEADDR         AHB2_BASEADDR
+#define DCMI_BASEADDR               (AHB2_BASEADDR + 0x50000U)
+#define CRYP_BASEADDR               (AHB2_BASEADDR + 0x60000U)
+#define HASH_BASEADDR               (AHB2_BASEADDR + 0x60400U)
+#define RNG_BASEADDR               (AHB2_BASEADDR + 0x60800U)
+
+/*
+ *  Peripheral Register struct for GPIOx
+ */
+
+ typedef struct
+ {
+    __vo uint32_t MODER;
+    __vo uint32_t OTYPER;
+    __vo uint32_t OSPEEDR;
+    __vo uint32_t PUPDR;
+    __vo uint32_t IDR;
+    __vo uint32_t ODR;
+    __vo uint32_t BSRR;
+    __vo uint32_t LCKR;
+    __vo uint32_t AFR[2];
+
+ }GPIO_RegDef_t;
+/*
+ * Enable clock for GPIOx
+ */
+#define GPIOA_CLK_EN             ()
+
+
+/*
+ * **************************----Interrupt----***************************
+ */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#endif /* INC_STM32F407XX_H_ */
