@@ -1,0 +1,5 @@
+1740044321319	Delete resource 'SPI_test/drivers/Inc/stm32f407xx.h'
+1740044346285	Delete resource 'SPI_test/drivers/Inc/stm32f407xx_gpio_driver.h'
+1740044350396	Delete resource 'SPI_test/drivers/Src/stm32f407xx_gpio_driver.c'
+1740071808115	Delete resource 'SPI_driver/Drivers/Src/stm32f407xx_spi'
+1740197774267	Delete resource 'SPI_test'

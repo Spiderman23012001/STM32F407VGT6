@@ -1,8 +1,0 @@
-/*
- * stm32f407xx_gpio.c
- *
- *  Created on: Feb 12, 2025
- *      Author: Rambo
- */
-
-#include "stm32f407xx_gpio.h"

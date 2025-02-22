@@ -107,7 +107,7 @@ typedef struct
  */
 
 /*
- * Init and De-init
+ * Peripheral clock setup
  */
 void GPIO_PeriClockControl(GPIO_RegDef_t *GPIOx, uint8_t EnOrDi);   //EnOrDi: Enable or Disable
 

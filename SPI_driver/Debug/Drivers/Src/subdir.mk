@@ -5,13 +5,16 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../Drivers/Src/stm32f407xx_gpio.c 
+../Drivers/Src/stm32f407xx_gpio.c \
+../Drivers/Src/stm32f407xx_spi.c 
 
 OBJS += \
-./Drivers/Src/stm32f407xx_gpio.o 
+./Drivers/Src/stm32f407xx_gpio.o \
+./Drivers/Src/stm32f407xx_spi.o 
 
 C_DEPS += \
-./Drivers/Src/stm32f407xx_gpio.d 
+./Drivers/Src/stm32f407xx_gpio.d \
+./Drivers/Src/stm32f407xx_spi.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
@@ -21,7 +24,7 @@ Drivers/Src/%.o Drivers/Src/%.su Drivers/Src/%.cyclo: ../Drivers/Src/%.c Drivers
 clean: clean-Drivers-2f-Src
 
 clean-Drivers-2f-Src:
-	-$(RM) ./Drivers/Src/stm32f407xx_gpio.cyclo ./Drivers/Src/stm32f407xx_gpio.d ./Drivers/Src/stm32f407xx_gpio.o ./Drivers/Src/stm32f407xx_gpio.su
+	-$(RM) ./Drivers/Src/stm32f407xx_gpio.cyclo ./Drivers/Src/stm32f407xx_gpio.d ./Drivers/Src/stm32f407xx_gpio.o ./Drivers/Src/stm32f407xx_gpio.su ./Drivers/Src/stm32f407xx_spi.cyclo ./Drivers/Src/stm32f407xx_spi.d ./Drivers/Src/stm32f407xx_spi.o ./Drivers/Src/stm32f407xx_spi.su
 
 .PHONY: clean-Drivers-2f-Src
 
