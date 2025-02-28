@@ -1,10 +1,30 @@
-14:11:29 **** Incremental Build of configuration Debug for project SPI_driver ****
+16:43:27 **** Build of configuration Debug for project SPI_driver ****
 make -j8 all 
+arm-none-eabi-gcc -mcpu=cortex-m4 -g3 -DDEBUG -c -x assembler-with-cpp -MMD -MP -MF"Startup/startup_stm32f407vgtx.d" -MT"Startup/startup_stm32f407vgtx.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Startup/startup_stm32f407vgtx.o" "../Startup/startup_stm32f407vgtx.s"
+arm-none-eabi-gcc "../Src/SPI_IT.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F407G_DISC1 -DSTM32F4 -DSTM32F407VGTx -c -I../Inc -I"C:/Users/Rambo/Desktop/stm32/SPI_driver/Drivers/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/SPI_IT.d" -MT"Src/SPI_IT.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/SPI_IT.o"
+arm-none-eabi-gcc "../Src/syscalls.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F407G_DISC1 -DSTM32F4 -DSTM32F407VGTx -c -I../Inc -I"C:/Users/Rambo/Desktop/stm32/SPI_driver/Drivers/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/syscalls.d" -MT"Src/syscalls.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/syscalls.o"
+arm-none-eabi-gcc "../Src/sysmem.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F407G_DISC1 -DSTM32F4 -DSTM32F407VGTx -c -I../Inc -I"C:/Users/Rambo/Desktop/stm32/SPI_driver/Drivers/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/sysmem.d" -MT"Src/sysmem.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/sysmem.o"
+arm-none-eabi-gcc "../Drivers/Src/stm32f407xx_gpio.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F407G_DISC1 -DSTM32F4 -DSTM32F407VGTx -c -I../Inc -I"C:/Users/Rambo/Desktop/stm32/SPI_driver/Drivers/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/Src/stm32f407xx_gpio.d" -MT"Drivers/Src/stm32f407xx_gpio.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/Src/stm32f407xx_gpio.o"
+arm-none-eabi-gcc "../Drivers/Src/stm32f407xx_spi.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F407G_DISC1 -DSTM32F4 -DSTM32F407VGTx -c -I../Inc -I"C:/Users/Rambo/Desktop/stm32/SPI_driver/Drivers/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/Src/stm32f407xx_spi.d" -MT"Drivers/Src/stm32f407xx_spi.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/Src/stm32f407xx_spi.o"
+../Src/SPI_IT.c: In function 'main':
+../Src/SPI_IT.c:162:63: warning: passing argument 2 of 'SPI_ReceiveDataIT' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+  162 |                         while ( SPI_ReceiveDataIT(&SPI2handle,&ReadByte,1) == SPI_BUSY_IN_RX );
+      |                                                               ^~~~~~~~~
+In file included from ../Src/SPI_IT.c:25:
+C:/Users/Rambo/Desktop/stm32/SPI_driver/Drivers/Inc/stm32f407xx_spi.h:137:62: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'volatile char *'
+  137 | uint8_t SPI_ReceiveDataIT(SPI_Handle_t *pSPIHandle, uint8_t *pRxBuffer, uint32_t Len);
+      |                                                     ~~~~~~~~~^~~~~~~~~
+arm-none-eabi-gcc -o "SPI_driver.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Rambo\Desktop\stm32\SPI_driver\STM32F407VGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="SPI_driver.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: SPI_driver.elf
+ 
 arm-none-eabi-size  SPI_driver.elf 
+arm-none-eabi-objdump -h -S SPI_driver.elf  > "SPI_driver.list"
    text	   data	    bss	    dec	    hex	filename
    8592	     92	   2444	  11128	   2b78	SPI_driver.elf
 Finished building: default.size.stdout
  
+Finished building: SPI_driver.list
+ 
 
-14:11:29 Build Finished. 0 errors, 0 warnings. (took 211ms)
+16:43:29 Build Finished. 0 errors, 1 warnings. (took 2s.655ms)
 
