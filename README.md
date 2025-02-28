@@ -1,84 +1,84 @@
 # STM32F407VGT6  
-## Hệ Thống IoT Đa Giao Thức Dựa Trên STM32F407 và ESP32  
+## Multi-Protocol IoT System Based on STM32F407 and ESP32  
 
-Dự án này phát triển một hệ thống IoT đa năng sử dụng **STM32F407** làm bộ xử lý trung tâm, kết hợp với **ESP32** để kết nối đám mây và module **HC-06** để giao tiếp Bluetooth với thiết bị di động. Hệ thống tích hợp nhiều giao thức truyền thông (I2C, SPI, UART, 1-Wire, WiFi, Bluetooth) nhằm thực hiện các chức năng chính:
+This project develops a versatile IoT system using the **STM32F407** as the central processing unit, combined with the **ESP32** for cloud connectivity and the **HC-06** module for Bluetooth communication with mobile devices. The system integrates multiple communication protocols (I2C, SPI, UART, 1-Wire, WiFi, Bluetooth) to enable the following functionalities:
 
-- Thu thập dữ liệu nhiệt độ và độ ẩm từ cảm biến **DHT11**.  
-- Hiển thị thông tin trên màn hình **LCD 1602**.  
-- Lưu trữ dữ liệu vào **thẻ SD**.  
-- Điều khiển động cơ (quạt, máy bơm, v.v.).  
-- Đồng bộ dữ liệu lên **Firebase**.  
-- Giám sát và điều khiển từ xa qua ứng dụng di động được phát triển bằng **MIT App Inventor**.  
-
----
-
-## Kiến Trúc Hệ Thống  
-
-### 1. STM32F407 - Bộ Vi Điều Khiển Trung Tâm  
-- Thu thập dữ liệu từ cảm biến DHT11 qua giao thức **1-Wire**.  
-- Hiển thị thông tin trên màn hình LCD 1602 qua giao thức **I2C**.  
-- Lưu trữ dữ liệu vào thẻ SD qua giao thức **SPI**.  
-- Điều khiển động cơ thông qua **GPIO** hoặc **PWM**.  
-- Giao tiếp với ESP32 qua **UART** để truyền dữ liệu lên đám mây.  
-- Kết nối với module Bluetooth HC-06 qua **UART** để giao tiếp với điện thoại.  
-
-### 2. ESP32 - Bộ Vi Điều Khiển Kết Nối Mạng  
-- Nhận dữ liệu từ STM32F407 qua **UART**.  
-- Kết nối **WiFi** để truyền dữ liệu lên Firebase.  
-- Xử lý và định dạng dữ liệu trước khi gửi lên đám mây.  
-
-### 3. HC-06 - Module Bluetooth  
-- Kết nối với STM32F407 qua **UART**.  
-- Thiết lập kết nối Bluetooth với điện thoại di động.  
-- Cho phép điều khiển trực tiếp từ điện thoại khi không có internet.  
-
-### 4. Các Thành Phần Khác  
-- **LCD 1602**: Hiển thị trạng thái hệ thống và dữ liệu cảm biến.  
-- **DHT11**: Cảm biến đo nhiệt độ và độ ẩm.  
-- **Thẻ SD**: Lưu trữ dữ liệu cục bộ để phân tích dài hạn.  
-- **Động cơ**: Quạt, máy bơm hoặc thiết bị điều khiển khác.  
-- **Firebase**: Cơ sở dữ liệu đám mây để lưu trữ và đồng bộ dữ liệu.  
-- **Ứng dụng MIT App Inventor**: Giao diện điều khiển và giám sát trên điện thoại.  
+- Collect temperature and humidity data from the **DHT11** sensor.  
+- Display information on the **LCD 1602** screen.  
+- Store data on an **SD card**.  
+- Control motors (e.g., fans, pumps, etc.).  
+- Synchronize data to **Firebase**.  
+- Monitor and control remotely via a mobile application developed with **MIT App Inventor**.  
 
 ---
 
-## Luồng Dữ Liệu  
+## System Architecture  
 
-### 1. Thu Thập Dữ Liệu  
-- STM32F407 đọc dữ liệu nhiệt độ và độ ẩm từ cảm biến DHT11.  
-- Dữ liệu được xử lý và hiển thị trên màn hình LCD 1602.  
-- Dữ liệu đồng thời được lưu trữ vào thẻ SD để phân tích dài hạn.  
+### 1. STM32F407 - Central Microcontroller  
+- Collects data from the DHT11 sensor via the **1-Wire** protocol.  
+- Displays information on the LCD 1602 screen using the **I2C** protocol.  
+- Stores data on the SD card via the **SPI** protocol.  
+- Controls motors through **GPIO** or **PWM**.  
+- Communicates with the ESP32 via **UART** to transmit data to the cloud.  
+- Connects to the HC-06 Bluetooth module via **UART** for mobile communication.  
 
-### 2. Truyền Dữ Liệu Lên Đám Mây  
-- STM32F407 gửi dữ liệu cho ESP32 qua UART.  
-- ESP32 kết nối WiFi và đẩy dữ liệu lên Firebase.  
-- Dữ liệu được lưu trữ trên đám mây và có thể truy cập từ bất kỳ đâu.  
+### 2. ESP32 - Network-Connected Microcontroller  
+- Receives data from the STM32F407 via **UART**.  
+- Connects to **WiFi** to upload data to Firebase.  
+- Processes and formats data before sending it to the cloud.  
 
-### 3. Điều Khiển Từ Xa  
-- Người dùng điều khiển hệ thống qua ứng dụng di động với hai phương thức:  
-  - Qua **Firebase → ESP32 → STM32F407** (khi có kết nối internet).  
-  - Qua **Bluetooth trực tiếp từ điện thoại → HC-06 → STM32F407** (khi không có internet).  
+### 3. HC-06 - Bluetooth Module  
+- Connects to the STM32F407 via **UART**.  
+- Establishes a Bluetooth connection with a mobile device.  
+- Allows direct control from the phone when no internet connection is available.  
 
-### 4. Phản Hồi Hệ Thống  
-- Trạng thái hệ thống được hiển thị trên LCD 1602.  
-- Thông tin cập nhật được gửi lại cho người dùng qua ứng dụng di động.  
-- Cảnh báo được kích hoạt nếu dữ liệu vượt ngưỡng cài đặt.  
-
----
-
-## Giao Thức Truyền Thông  
-
-| **Giao Thức** | **Thiết Bị Kết Nối**        | **Tốc Độ/Cấu Hình** | **Chức Năng**                        |  
-|---------------|-----------------------------|---------------------|--------------------------------------|  
-| I2C           | STM32F407 ↔ LCD 1602       | 100kHz             | Hiển thị trạng thái và dữ liệu       |  
-| SPI           | STM32F407 ↔ Thẻ SD         | 10-25MHz           | Lưu trữ dữ liệu cục bộ              |  
-| UART          | STM32F407 ↔ ESP32          | 115200 baud, 8N1   | Truyền dữ liệu lên đám mây          |  
-| UART          | STM32F407 ↔ HC-06          | 9600 baud, 8N1     | Kết nối Bluetooth với điện thoại    |  
-| 1-Wire        | STM32F407 ↔ DHT11          | N/A                | Đọc dữ liệu nhiệt độ và độ ẩm       |  
-| WiFi          | ESP32 ↔ Firebase           | 2.4GHz             | Kết nối đám mây                     |  
-| Bluetooth     | HC-06 ↔ Điện thoại         | 2.4GHz, SPP        | Điều khiển trực tiếp                |  
+### 4. Other Components  
+- **LCD 1602**: Displays system status and sensor data.  
+- **DHT11**: Sensor for measuring temperature and humidity.  
+- **SD Card**: Local storage for long-term data analysis.  
+- **Motor**: Can be a fan, pump, or other controlled device.  
+- **Firebase**: Cloud database for data storage and synchronization.  
+- **MIT App Inventor Application**: User interface for monitoring and control on mobile devices.  
 
 ---
 
-## Sơ Đồ Hệ Thống  
+## Data Flow  
+
+### 1. Data Collection  
+- The STM32F407 reads temperature and humidity data from the DHT11 sensor.  
+- Data is processed and displayed on the LCD 1602 screen.  
+- Simultaneously, data is stored on the SD card for long-term analysis.  
+
+### 2. Data Transmission to the Cloud  
+- The STM32F407 sends data to the ESP32 via UART.  
+- The ESP32 connects to WiFi and uploads the data to Firebase.  
+- Data is stored in the cloud and can be accessed from anywhere.  
+
+### 3. Remote Control  
+- Users can control the system via the mobile app using two methods:  
+  - Via **Firebase → ESP32 → STM32F407** (with an internet connection).  
+  - Via **Bluetooth directly from the phone → HC-06 → STM32F407** (without internet).  
+
+### 4. System Feedback  
+- System status is displayed on the LCD 1602.  
+- Updated information is sent back to the user via the mobile app.  
+- Alerts can be triggered if data exceeds predefined thresholds.  
+
+---
+
+## Communication Protocols  
+
+| **Protocol**  | **Connected Devices**       | **Speed/Configuration** | **Function**                        |  
+|---------------|-----------------------------|-------------------------|-------------------------------------|  
+| I2C           | STM32F407 ↔ LCD 1602       | 100kHz                 | Display status and data            |  
+| SPI           | STM32F407 ↔ SD Card        | 10-25MHz              | Local data storage                 |  
+| UART          | STM32F407 ↔ ESP32          | 115200 baud, 8N1      | Transmit data to the cloud         |  
+| UART          | STM32F407 ↔ HC-06          | 9600 baud, 8N1        | Bluetooth connection to phone      |  
+| 1-Wire        | STM32F407 ↔ DHT11          | N/A                   | Read temperature and humidity data |  
+| WiFi          | ESP32 ↔ Firebase           | 2.4GHz                | Cloud connectivity                 |  
+| Bluetooth     | HC-06 ↔ Phone              | 2.4GHz, SPP           | Direct control                     |  
+
+---
+
+## System Diagram  
 ![System SVG](https://raw.githubusercontent.com/Spiderman23012001/STM32F407VGT6/main/img/sys.svg)  
