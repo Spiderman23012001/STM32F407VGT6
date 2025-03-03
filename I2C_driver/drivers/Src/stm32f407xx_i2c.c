@@ -18,6 +18,7 @@
  */
 static void I2C_GenerateStartCondition(I2C_RegDef_t *pI2Cx);
 static void I2C_ExecuteAddressPhaseWrite(I2C_RegDef_t *pI2Cx, uint8_t slaveaddr);
+static void I2C_ClearADDRFlag(I2C_RegDef_t *pI2Cx);
 
 static void I2C_GenerateStartCondition(I2C_RegDef_t *pI2Cx)
 {
@@ -36,6 +37,12 @@ void I2C_GenerateStopCondition(I2C_RegDef_t *pI2Cx)
 	pI2Cx->CR1 |= (1 << I2C_CR1_STOP);
 }
 
+static void I2C_ClearADDRFlag(I2C_RegDef_t *pI2Cx)
+{
+	uint32_t dummyRead = pI2Cx->SR1;
+	dummyRead = pI2Cx->SR2;
+	(void)dummyRead;
+}
 /*
  * Peripheral Clock setup
  */
@@ -115,6 +122,18 @@ void I2C_Init(I2C_Handle_t *pI2CHandle)
 	}
 	pI2CHandle->pI2Cx->CCR = tempreg;
 
+	// TRISE configuration
+	if(pI2CHandle->I2C_Config.I2C_SCLSpeed <= I2C_SCL_SPEED_FM)
+	{
+		// Standard mode 1000ns = 1us
+		temp_reg = (rcc_getpclk1()/1000000U) + 1;
+	}else
+	{
+		// Fast mode 300ns
+		temp_reg = (rcc_getpclk1()*300/1000000000) + 1;
+	}
+	pI2CHandle->pI2Cx->TRISE = (tempreg & 0x3F);
+
 }
 void I2C_DeInit(I2C_RegDef_t *pI2Cx);
 
@@ -132,7 +151,30 @@ void I2C_MasterSendData(I2C_Handle_t *pI2CHandle,uint8_t *pTxbuffer, uint32_t Le
 	while(! I2C_GetFlagStatus(pI2CHandle->pI2Cx, I2C_SB_FLAG));
 
 	// 3. Send the address of slave with R/W bit set (total 8 bits)
-	I2C_ExecuteAddressPhaseWrite();
+	I2C_ExecuteAddressPhaseWrite(pI2CHandle->pI2Cx, SlaveAddr);
+	// 4. confirm that address phase is completed by checking the ADDR flag in the SR1
+	while(! I2C_GetFlagStatus(pI2CHandle->pI2Cx, I2C_ADDR_FLAG));
+	// 5. Clear the ADDR flag according to its software sequence
+	//Note: Until ADDR is cleared SCL will be stretched ( pulled to LOW )
+	I2C_ClearADDRFlag(pI2CHandle->pI2Cx);
+
+	// 6. Send data until Len becomes 0
+	while(Len>0)
+	{
+		while(! I2C_GetFlagStatus(pI2CHandle->pI2Cx, I2C_TXE_FLAG));
+		pI2CHandle->pI2Cx->DR = *pTxbuffer;
+		pTxbuffer ++;
+		Len--;
+	}
+	// 7. When len becomes zero wait for TXE=1 and BTF=1 before generating the STOP condition
+	// Note: TXE=1, BTF=1 , mean that both SR and DR are empty and next transmission should begin
+	// when BTF=1 SCL will be stretched ( pull to LOW)
+	while(! I2C_GetFlagStatus(pI2CHandle->pI2Cx, I2C_TXE_FLAG));
+	while(! I2C_GetFlagStatus(pI2CHandle->pI2Cx, I2C_BTF_FLAG));
+
+	// 8. Generate STOP condition and master need not to wait for the completion of stop condition.
+	// Note: generating STOP, automatically clears the BTF
+	I2C_GenerateStopCondition(pI2CHandle->pI2Cx);
 
 
 }
